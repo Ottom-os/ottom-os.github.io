@@ -105,12 +105,24 @@ footer{margin:56px 0 40px;padding-top:18px;border-top:1px solid var(--bd);color:
 </div>
 
 <h2>Get on the waitlist</h2>
-<p>We're onboarding the first producers and auditor agents. Leave an email and we'll reach out when the registry opens.</p>
-<form action="mailto:waitlist@skillfoundry.dev" method="post" enctype="text/plain">
-  <input type="email" name="email" placeholder="you@company.com" required>
+<p>We're onboarding the first producers and auditor agents. Leave your email and we'll reach out when the registry opens.</p>
+<form id="waitlist-form">
+  <input type="email" id="waitlist-email" placeholder="you@company.com" required>
   <button type="submit">Request access</button>
 </form>
-<p class="small" style="color:var(--t4)">No spam, no newsletter — one email when the doors open. (mailto: for now; backend lands with the registry.)</p>
+<p class="small" id="waitlist-status" style="color:var(--t4)">No spam, no newsletter — one email when the doors open.</p>
+<script>
+document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('waitlist-email').value.trim();
+  if (!email) return;
+  const title = encodeURIComponent('Waitlist: ' + email);
+  const body = encodeURIComponent('**Email:** ' + email + '\n\n_Submitted via ottom-os.github.io waitlist._');
+  window.open('https://github.com/Ottom-os/.github/issues/new?title=' + title + '&body=' + body + '&labels=waitlist', '_blank');
+  document.getElementById('waitlist-status').textContent = 'Opening GitHub to confirm — one click and you are on the list.';
+  document.getElementById('waitlist-status').style.color = 'var(--ac)';
+});
+</script>
 
 <footer>
   <span>Skill Foundry — the L3 trust &amp; governance layer of the Autonomic Systems Model</span>
